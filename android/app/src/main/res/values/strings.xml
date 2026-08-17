@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">老师来了</string>
+    <string name="accessibility_service_description">老师来了专注服务：用于在专注期间强制锁定目标应用，防止退出到桌面或其他应用。请保持开启以确保专注效果。</string>
+</resources>

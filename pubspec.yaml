@@ -1,0 +1,20 @@
+name: teacher_is_here
+description: "老师来了 - 防摸鱼专注神器，通过悬浮窗锁定目标应用，帮助你保持专注。"
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.12.2
+
+dependencies:
+  flutter:
+    sdk: flutter
+  cupertino_icons: ^1.0.8
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^6.0.0
+
+flutter:
+  uses-material-design: true

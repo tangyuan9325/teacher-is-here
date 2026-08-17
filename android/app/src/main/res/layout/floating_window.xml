@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/floating_root"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@drawable/floating_window_bg"
+    android:paddingHorizontal="20dp"
+    android:paddingVertical="14dp"
+    android:gravity="center"
+    android:elevation="12dp">
+
+    <TextView
+        android:id="@+id/floating_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="👩‍🏫 老师来了"
+        android:textColor="#FFFFFF"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        android:shadowColor="#40000000"
+        android:shadowDx="0"
+        android:shadowDy="1"
+        android:shadowRadius="2" />
+
+    <TextView
+        android:id="@+id/floating_subtitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:text="点击开始专注"
+        android:textColor="#E0FFFFFF"
+        android:textSize="11sp" />
+
+</LinearLayout>
