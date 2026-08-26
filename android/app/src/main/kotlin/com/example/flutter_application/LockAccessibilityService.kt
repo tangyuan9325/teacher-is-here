@@ -3,6 +3,8 @@ package com.example.flutter_application
 import android.accessibilityservice.AccessibilityService
 import android.accessibilityservice.AccessibilityServiceInfo
 import android.app.ActivityManager
+import android.app.usage.UsageStatsManager
+import android.content.Context
 import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
@@ -183,13 +185,34 @@ class LockAccessibilityService : AccessibilityService() {
     }
 
     private fun getForegroundPackage(): String? {
+        // 优先使用 UsageStatsManager（Android 5.0+ 推荐方式，需 PACKAGE_USAGE_STATS 权限）
+        // 回退到无障碍事件检测（本服务已监听 TYPE_WINDOW_STATE_CHANGED）
         return try {
-            val am = getSystemService(ACTIVITY_SERVICE) as ActivityManager
-            @Suppress("DEPRECATION")
-            val tasks = am.getRunningTasks(1)
-            if (tasks.isNotEmpty()) {
-                tasks[0].topActivity?.packageName
-            } else null
+            val usm = getSystemService(Context.USAGE_STATS_SERVICE) as UsageStatsManager
+            val now = System.currentTimeMillis()
+            // 查询最近 10 秒内的使用统计
+            val stats = usm.queryUsageStats(UsageStatsManager.INTERVAL_BEST, now - 10000, now)
+            if (stats != null && stats.isNotEmpty()) {
+                // 找到最近时间戳的应用
+                var recentPkg: String? = null
+                var recentTime = 0L
+                for (us in stats) {
+                    if (us.lastTimeUsed > recentTime) {
+                        recentTime = us.lastTimeUsed
+                        recentPkg = us.packageName
+                    }
+                }
+                recentPkg
+            } else {
+                // UsageStatsManager 无数据（可能未授权），回退到 getRunningTasks
+                @Suppress("DEPRECATION")
+                val am = getSystemService(ACTIVITY_SERVICE) as ActivityManager
+                @Suppress("DEPRECATION")
+                val tasks = am.getRunningTasks(1)
+                if (tasks.isNotEmpty()) {
+                    tasks[0].topActivity?.packageName
+                } else null
+            }
         } catch (_: Exception) {
             null
         }
