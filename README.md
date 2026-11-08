@@ -98,4 +98,4 @@ android/app/src/main/
 
 ## 📄 License
 
-MIT License
+[MIT License](LICENSE) © 2026 TangYuan
